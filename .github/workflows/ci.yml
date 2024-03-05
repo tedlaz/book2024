@@ -27,7 +27,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: python -m pip install pytest
+        run: python -m pip install pytest coverage pytest-cov
 
       - name: Run tests
-        run: pytest
+        run: pytest --cov --cov-report=html

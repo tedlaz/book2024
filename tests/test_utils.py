@@ -24,6 +24,7 @@ def test_int2gr():
 def test_int2gr_zero_as_space():
     assert utl.int2gr_zero_as_space(0) == ""
     assert utl.int2gr_zero_as_space(-0) == ""
+    assert utl.int2gr_zero_as_space(1000) == "10,00"
 
 
 def test_capitalize_account():

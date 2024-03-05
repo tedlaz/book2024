@@ -39,10 +39,6 @@ class Transaction:
     def ypoloipo(self):
         return sum([i.value for i in self.lines])
 
-    @property
-    def accounts_set(self):
-        return set([i.account for i in self.lines])
-
     @classmethod
     def tran_from_list(cls, adate, journal, par, lines):
         trlines = [TransactionLine(acc, val) for acc, val in lines]
