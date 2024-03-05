@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import date
 
 
@@ -19,9 +21,12 @@ class TransactionLine:
 
 
 class Transaction:
-    def __init__(self, adate: date | str, journal: str, lines: list[TransactionLine]):
+    def __init__(
+        self, adate: date | str, journal: str, par: str, lines: list[TransactionLine]
+    ):
 
         self.journal = journal
+        self.par = par
 
         if isinstance(adate, date):
             self.date = adate
@@ -39,38 +44,37 @@ class Transaction:
         return set([i.account for i in self.lines])
 
     @classmethod
-    def tran_from_list(cls, adate, journal, lines):
+    def tran_from_list(cls, adate, journal, par, lines):
         trlines = [TransactionLine(acc, val) for acc, val in lines]
-        return cls(adate, journal, trlines)
+        return cls(adate, journal, par, trlines)
 
     @classmethod
-    def tran_from_dict(cls, adate, journal, lines):
+    def tran_from_dict(cls, adate, journal, par, lines):
         trlines = [TransactionLine(acc, val) for acc, val in lines.items()]
-        return cls(adate, journal, trlines)
+        return cls(adate, journal, par, trlines)
 
     @classmethod
-    def tran_duo(cls, adate, journal, acc_debit, acc_credit, value):
-        lines = [TransactionLine(acc_credit, value), TransactionLine(acc_debit, -value)]
-        return cls(adate, journal, lines)
+    def tran_duo(cls, adate, journal, par, acc_debit, acc_credit, value):
+        lines = [TransactionLine(acc_debit, value), TransactionLine(acc_credit, -value)]
+        return cls(adate, journal, par, lines)
 
     def __repr__(self):
-        return f"Transaction(date={self.date}, lines={self.lines})"
+        return f"Transaction(date={self.date}, journal={self.journal}, par={self.par}, lines={self.lines})"
 
-    def __add__(self, another):
+    def __add__(self, other: Transaction):
 
-        if self.date != another.date:
+        if self.date != other.date:
             raise ValueError("Not Same Date")
 
-        if self.journal != another.journal:
+        if self.journal != other.journal:
             raise ValueError("Not same journal")
 
         accs = {}
-
-        for lin in self.lines:
+        for lin in self.lines + other.lines:
             accs[lin.account] = accs.get(lin.account, 0) + lin.value
+        accs = {key: val for key, val in accs.items() if val != 0}
 
-        for lin in another.lines:
-            accs[lin.account] = accs.get(lin.account, 0) + lin.value
+        par_equal = self.par.lower() == other.par.lower()
+        npr = self.par if par_equal else f"{self.par},{other.par}"
 
-        return self.tran_from_dict(self.date, self.journal, accs)
-
+        return self.tran_from_dict(self.date, self.journal, npr, accs)
