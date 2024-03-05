@@ -1,10 +1,10 @@
 import pathlib
 
-from parse_accounts import parse_accounts
+from book2024.parse_accounts import parse_accounts
 
-PATH = pathlib.Path().absolute() / "tests" / "example"
+PATH = pathlib.Path(__file__).parent.resolve()
 
 
 def test_parser():
-    omades, accounts = parse_accounts(PATH / "accounts.txt")
+    omades, accounts = parse_accounts(PATH / "example" / "accounts.txt")
     print(omades, accounts)

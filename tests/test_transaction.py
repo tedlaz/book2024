@@ -1,6 +1,6 @@
 import pytest
 
-import transaction as trn
+import book2024.transaction as trn
 
 
 def test_transaction():
