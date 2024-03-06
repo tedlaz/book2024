@@ -1,0 +1,6 @@
+Εξοδα        ejoda
+Εσοδα        esoda
+Πάγια        pagia
+Πιστωτές     ypoxreoseis
+Ταμείο       apaitiseis
+Χρεώστες     apaitiseis

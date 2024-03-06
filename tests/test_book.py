@@ -22,6 +22,8 @@ def test_book1(trans):
     book.insert(tra)
     book.new_duo("2024-03-05", "m", "inv45", "customers", "income", 125)
     bal = book.balance_sheet()
+    assert book.info == "Book(name=MyBook, TotalTransactions=8)"
+    assert repr(book) == "Book(name=MyBook, TotalTransactions=8)"
     assert bal["customers"] == 125
     assert bal["cash"] == 300
     assert bal["income"] == -425

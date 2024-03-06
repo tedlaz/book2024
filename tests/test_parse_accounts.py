@@ -6,5 +6,5 @@ PATH = pathlib.Path(__file__).parent.resolve()
 
 
 def test_parser():
-    omades, accounts = parse_accounts(PATH / "example" / "accounts.txt")
-    print(omades, accounts)
+    accounts = parse_accounts(PATH / "example" / "accounts.txt")
+    assert ("Ταμείο.Μετρητά.Τσέπη", "+") in accounts
