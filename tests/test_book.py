@@ -27,3 +27,9 @@ def test_book1(trans):
     assert bal["customers"] == 125
     assert bal["cash"] == 300
     assert bal["income"] == -425
+
+
+def test_book2(trans):
+    book = Book(name="MyBook", transactions=trans)
+    lol = book.as_list_of_lines
+    print([i for i in lol if i.account == "20.00"])

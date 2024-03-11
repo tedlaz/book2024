@@ -30,3 +30,10 @@ def test_int2gr_zero_as_space():
 def test_capitalize_account():
     assert utl.capitalize_account("δοκιμή.ξανά") == "Δοκιμή.Ξανά"
     assert utl.capitalize_account("δοκιΜή.ξανά") == "Δοκιμή.Ξανά"
+
+
+def test_add_dic2_to_dic1():
+    dic1 = {"a": 10, "b": 20}
+    dic2 = {"b": 5, "c": 30}
+    utl.add_dic2_to_dic1(dic1, dic2)
+    assert dic1 == {"a": 10, "b": 25, "c": 30}

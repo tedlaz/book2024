@@ -1,4 +1,5 @@
 from .transaction import Transaction as Trn
+from .utils import add_dic2_to_dic1
 
 
 class Book:
@@ -27,6 +28,12 @@ class Book:
     def balance_sheet(self) -> dict:
         result = {}
         for trn in self.transactions:
-            for line in trn.lines:
-                result[line.account] = result.get(line.account, 0) + line.value
+            add_dic2_to_dic1(result, trn.lines_as_dict)
         return result
+
+    @property
+    def as_list_of_lines(self):
+        res = []
+        for trn in self.transactions:
+            res += trn.as_list_of_lines
+        return res

@@ -38,3 +38,9 @@ def int2gr_zero_as_space(number: int):
     if number == 0:
         return ""
     return int2gr(number)
+
+
+def add_dic2_to_dic1(dic1: dict, dic2: dict):
+    for key, value in dic2.items():
+        dic1[key] = dic1.get(key, 0)
+        dic1[key] += value

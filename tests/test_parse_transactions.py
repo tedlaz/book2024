@@ -7,4 +7,5 @@ PATH = pathlib.Path(__file__).parent.resolve()
 
 def test_parser():
     trans = parse_trans(PATH / "example" / "trn01.txt")
-    print(trans)
+    atrn = trans[0]
+    assert atrn["value"] == "125,43"

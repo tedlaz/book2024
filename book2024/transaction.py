@@ -2,6 +2,16 @@ from __future__ import annotations
 
 from datetime import date
 
+from pydantic import BaseModel
+
+
+class Trn(BaseModel):
+    date: date
+    journal: str
+    par: str
+    account: str
+    value: int
+
 
 class TransactionLine:
     def __init__(self, account, value: int):
@@ -36,8 +46,35 @@ class Transaction:
         self.lines = lines
 
     @property
+    def as_list_of_lines(self) -> list[Trn]:
+        res = []
+        for line in self.lines:
+            res.append(
+                Trn(
+                    date=self.date,
+                    journal=self.journal,
+                    par=self.par,
+                    account=line.account,
+                    value=line.value,
+                )
+            )
+        return res
+
+    @property
     def ypoloipo(self):
         return sum([i.value for i in self.lines])
+
+    @property
+    def lines_as_dict(self):
+        res = {}
+        for line in self.lines:
+            res[line.account] = res.get(line.account, 0)
+            res[line.account] += line.value
+        return res
+
+    @property
+    def list_of_accounts(self):
+        return [i.account for i in self.lines]
 
     @classmethod
     def tran_from_list(cls, adate, journal, par, lines):
